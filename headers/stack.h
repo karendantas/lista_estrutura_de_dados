@@ -4,18 +4,17 @@
 
 #ifndef STACK_H
 #define STACK_H
-#include "node.h"
+#include "nodechar.h"
 #include <iostream>
 
 class Stack {
    public:
-      Node *top;
+      NodeChar *top;
       Stack();
       ~Stack();
-      void push(int value);
+      void push(char value);
       void pop();
       void display();
-      void search(int value);
-      void displayinverse();
+      void search(char value);
 };
 #endif //STACK_H

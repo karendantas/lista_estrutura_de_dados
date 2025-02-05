@@ -2,14 +2,14 @@
 // Created by Karen on 04/02/2025.
 //
 #include "../headers/stack.h"
-#include "../headers/node.h"
+#include "../headers/nodechar.h"
 #include <iostream>
 using namespace std;
 Stack::Stack(): top(nullptr){};
 Stack::~Stack(){};
 
 void Stack::push(char value){
-    Node *newNode = new Node(value);
+    NodeChar *newNode = new NodeChar(value);
       newNode->next = top;
       top = newNode;
 }
@@ -19,21 +19,15 @@ void Stack::pop(){
     cout << "Pilha está vazia" << endl;
     return;
   }
-  Node *temp = top;
   top = top->next;
-  delete temp;
-
 }
 
 void Stack::display(){
- Node *temp = top;
+ NodeChar *temp = top;
  while (temp != nullptr){
    cout << temp->value << " ";
    temp = temp->next;
+  cout << endl;
  }
-
 }
 
-void Stack::displayinverse(){
-
-}

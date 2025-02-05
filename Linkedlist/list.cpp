@@ -95,15 +95,19 @@ void List::pop(int value){
 void List::remove_duplicates(){
     Node *current = head;
 
-    while(current->next != nullptr ){
+    while(current != nullptr ){
         Node *prev = current;
-        Node *next = current->next;
+        Node *nextnode = current->next;
+        while(nextnode != nullptr){
+          if(nextnode->value == current->value){
+             prev->next = nextnode->next;
+             delete nextnode;
+             nextnode = prev->next;
+          }else{
+           prev = nextnode;
+           nextnode = nextnode->next;
+          }
 
-        while(prev->next != nullptr){
-          cout << "Anterior:" << prev->value << endl;
-          cout << "Próximo: " << next->value << endl;
-          prev = prev->next;
-          next = next->next;
         }
 
         current = current->next;
