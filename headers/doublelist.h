@@ -17,6 +17,7 @@ public:
     void search(int value);
     void display();
     void remove_duplicates();
+    void add_ordenade(int value);
 
 };
 #endif //DOUBLELIST_H

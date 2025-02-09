@@ -11,12 +11,11 @@ void DoubleList::push_front(int value){
 
   //se for o unico elemento
   if(head == nullptr && tail == nullptr){
-    tail = newNode;
+    head = tail = newNode;
   };
+  head->prev = newNode;
   newNode->next = head;
-  newNode->prev = nullptr;
   head = newNode;
-  head->prev = nullptr;
 
 };
 
@@ -48,13 +47,13 @@ void DoubleList::pop(int value){
       }
 
       head = head->next;
-      free(temp);
+
     }else{
 
       //Nó atual
       Doublenode *current = head->next;
 
-      while (current->next != nullptr && current->value != value){
+      while (current != nullptr && current->value != value){
           current = current->next;
       }
 
@@ -62,10 +61,11 @@ void DoubleList::pop(int value){
         cout << "Elemento nao encontrado" << endl;
         return;
       }
-      cout << "Elemento excluido:" << current->value << endl;
+      cout << "Elemento excluido:" << current->prev << endl;
       Doublenode *prev = current->prev;
+      cout << "Prev:" << prev->value << endl;
       prev->next = current->next;
-      free(current);
+
 
     }
 
@@ -74,18 +74,23 @@ void DoubleList::pop(int value){
 
 void DoubleList::search(int value){
   Doublenode *temp = head;
-  int found = false;
+  Doublenode *found = nullptr;
   while(temp != nullptr){
     if(temp->value == value){
-      found = true;
+      found = temp;
     };
     temp = temp->next;
   };
 
-  if (found){
-    cout << "Elemento encontrado" << endl;
+  if (found != nullptr){
+    Doublenode *prev = found->prev;
+    Doublenode *next = found->next;
+    cout << "Elemento: " << found->value << endl;
+    cout << "Anterior: " << prev->value << endl;
+    cout << "Proximo: " << next->value << endl;
   }else{
-    cout<< "Elemento nao encontrado." << endl;
+    cout << "Elemento nao encontrado" << endl;
+    return;
   }
 }
 
@@ -115,5 +120,49 @@ void DoubleList::remove_duplicates(){
         current = current->next;
 
     }
+
+}
+
+void DoubleList::add_ordenade(int value){
+   Doublenode *newnode = new Doublenode(value);
+  //novo nó é o primeiro elemento
+  if (head == nullptr && tail == nullptr){
+    head = tail = newnode;
+    return;
+  }
+
+  //novo é menor que head
+  if (value <= head->value ){
+    newnode->next = head;
+    head->prev = newnode;
+    head = newnode;
+    return;
+  }
+
+  //novo nó é maior que tail
+  if (value >=tail->value ){
+    newnode->prev = tail;
+    tail->next = newnode;
+    tail = newnode;
+    return;
+  }
+
+  //no meio
+    Doublenode *current = head;
+    while(current != nullptr){
+      if (value <= current->value ){
+        Doublenode *prev = current->prev;
+
+        prev->next = newnode;
+        newnode->prev = prev;
+        newnode->next = current;
+        current->prev = newnode;
+        return;
+      }else{
+
+      }
+      current = current->next;
+    }
+
 
 }
